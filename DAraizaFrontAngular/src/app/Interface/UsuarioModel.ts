@@ -1,4 +1,6 @@
-export interface Usuario{
+import { Direccion } from "./DireccionModel"
+
+export interface UsuarioModel{
     IdUsuario : number,
     Nombre : string,
     ApellidoPaterno: string,
@@ -12,39 +14,10 @@ export interface Usuario{
     Sexo : string,
     Status : number,
     Username: string,
-    Rol: {
-        NombreRol: string,
-        idRol: number
-    },
-    Direcciones: [{
-        idDireccion: number,
-        Calle: string,
-        NumeroExterior : number,
-        NumeroInterior: number,
-        colonia: {
-            idColonia: number,
-            Nombre: string,
-            CodigoPostal: number,
-            municipio: {
-                idMunicipio: number,
-                Nombre: string,
-                estado: {
-                    Nombre: string,
-                    idEstado: number,
-                    pais:{
-                        idPais: number,
-                        Nombre: string
-                    }
-                }
-            }
-        }
-    }
-    ]
+    Direcciones: Direccion
 }
 
-    export interface UsuarioModel{
-        object: Usuario[];
-    }
+
 
     
 

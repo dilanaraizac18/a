@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../Service/usuario-services';
-import { Usuario, UsuarioModel } from '../../Interface/UsuarioModel';
+import {UsuarioModel } from '../../Interface/UsuarioModel';
 
 @Component({
   selector: 'app-usuario-component',
@@ -11,7 +11,7 @@ import { Usuario, UsuarioModel } from '../../Interface/UsuarioModel';
 export class UsuarioComponent implements OnInit{
 
 
-public usuarios : Usuario[] = [];
+public usuarios : UsuarioModel[] = [];
 
 constructor (private usuarioService: UsuarioService){};
 
@@ -21,8 +21,8 @@ ngOnInit():void{
 
 GetAll(){
 this.usuarioService.getAll().subscribe(
-  (data: any) =>{
-    this.usuarios = data.object;
+  data =>{
+    this.usuarios = data.objects;
     console.log(data)
   }, error=>{
 
