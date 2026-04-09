@@ -1,0 +1,24 @@
+<div class="card shadow border-0">
+
+    <div class="card-body p-4">
+        <h3 class="card-tittle text-center mb-4">Agregar nuevo usuario</h3>
+
+        <form [formGroup]="form" (submit)="enviarDatos()"></form>
+        <div class="mb-3">
+            <label class="form-label">Nombre: </label>
+            <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Apellido Paterno</label>
+
+        </div>
+
+        <div>
+             <button type="submit" class="btn btn-primary btn-lg">Crear nuevo usuario</button>
+        </div>
+
+
+    </div>
+
+</div>

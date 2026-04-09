@@ -1,3 +1,9 @@
+import { Colonia } from "./ColoniaModel";
+
 export interface Direccion{
-    idDireccion : number
+   idDireccion : number,
+   Calle: string,
+   NumeroInterior: string,
+   NumeroExterior: string,
+   colonia: Colonia
 }

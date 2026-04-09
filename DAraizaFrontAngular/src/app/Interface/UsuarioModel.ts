@@ -1,4 +1,5 @@
-import { Direccion } from "./DireccionModel"
+ import { Direccion } from "./DireccionModel"
+import { Rol } from "./RolModel"
 
 export interface UsuarioModel{
     IdUsuario : number,
@@ -14,7 +15,8 @@ export interface UsuarioModel{
     Sexo : string,
     Status : number,
     Username: string,
-    Direcciones: Direccion
+    Rol: Rol,
+    Direcciones: Direccion []
 }
 
 
