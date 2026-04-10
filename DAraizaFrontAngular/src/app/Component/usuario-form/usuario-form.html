@@ -95,7 +95,7 @@
 
             <div class="mb-3">
                 <label class="form-label text-white fs-5">Pais</label>
-                <select id="ddlpais" class="form-select form-select-sm w-25 bg-dark text-success border-success">
+                <select id="ddlpais" class="form-select form-select-sm w-25 bg-dark text-success border-success" (change)="cambioPais($event)">
 
                     <option value=0 selected> Seleccione un pais</option>
                     @for (pais of paises; track pais.idPais) {
@@ -108,7 +108,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label text-white fs-5">Estado</label>
-                <select id="ddlestado" class="form-select form-select-sm w-25 bg-dark text-success border-success">
+                <select id="ddlestado" class="form-select form-select-sm w-25 bg-dark text-success border-success" (change)="cambioEstado($event)">
 
                     <option value=0 selected> Seleccione un estado</option>
                     @for (estado of estados; track estado.idEstado) {
@@ -120,12 +120,25 @@
             </div>
             <div class="mb-3">
                 <label class="form-label text-white fs-5">Municipio</label>
-                <select id="ddlmunicipio" class="form-select form-select-sm w-25 bg-dark text-success border-success">
+                <select id="ddlmunicipio" class="form-select form-select-sm w-25 bg-dark text-success border-success" (change)="cambioMunicipio($event)">
 
                     <option value=0 selected> Seleccione un estado</option>
-                    @for (estado of estados; track estado.idEstado) {
+                    @for (municipio of municipios; track municipio.idMunicipio) {
 
-                    <option [value]="estado.idEstado" [text]="estado.Nombre"></option>
+                    <option [value]=municipio.idMunicipio [text]=municipio.Nombre></option>
+
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label text-white fs-5">Colonia</label>
+                <select id="ddlmunicipio" class="form-select form-select-sm w-25 bg-dark text-success border-success" >
+
+                    <option value=0 selected> Seleccione una colonia</option>
+                    @for (colonia of colonias; track colonia.idColonia) {
+
+                    <option [value]=colonia.idColonia [text]=colonia.Nombre></option>
 
                     }
                 </select>

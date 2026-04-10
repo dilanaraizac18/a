@@ -5,6 +5,8 @@ import { UsuarioService } from '../../Service/usuario-services';
 import { Pais } from '../../Interface/PaisModel';
 import { Rol } from '../../Interface/RolModel';
 import { Estado } from '../../Interface/EstadoModel';
+import { Municipio } from '../../Interface/MunicipioModel';
+import { Colonia } from '../../Interface/ColoniaModel';
 
 @Component({
   selector: 'app-usuario-form',
@@ -18,6 +20,10 @@ export class UsuarioForm {
   public paises: Pais[] = [];
   public roles: Rol[] = [];
   public estados : Estado [] = [];
+  public municipios: Municipio [] = [];
+  public colonias: Colonia [] = [];
+    public identificador: number | undefined;
+
 
 
   private formularioReactivo = inject(FormBuilder);
@@ -82,19 +88,61 @@ export class UsuarioForm {
 
     )
   }
+ cambioPais(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.identificador = +selectElement.value;
+    console.log('ID seleccionado:', selectElement.value);
+    this.GetEstado();
+    //this.getEstados(this.identificador);
+  };
 
-  // GetEstado(){
-  //   this.usuarioService.getEstado().subscribe(
-  //     data =>{
-  //       this.estados = data.objects;
-  //       console.log(data);
-  //     }, error =>{
+  GetEstado(){
+    this.usuarioService.getEstado(this.identificador).subscribe(
+      data =>{
+        this.estados = data.objects;
+        console.log(data);
+      }, error =>{
 
-  //     }
-  //   )
-  // }
+      }
+    )
+  }
+
+  cambioEstado(event: Event) {
+    const optionEstado = event.target as HTMLSelectElement;
+    this.identificador = +optionEstado.value;
+    console.log("Id de estados: ", this.identificador);
+    this.getMunicipios();
+
+  }
+
+  cambioMunicipio(event: Event) {
+    const optionMunicipio = event.target as HTMLSelectElement;
+    this.identificador = +optionMunicipio.value;
+    console.log("Id de municipio: ", this.identificador);
+    this.getColonia();
+  }
+
+
+
+  getMunicipios() {
+    this.usuarioService.getMunicipios(this.identificador).subscribe(
+      data => {
+        console.log(data);
+        this.municipios = data.objects;
+      }
+    )
+  }
+
+  getColonia() {
+    this.usuarioService.getColonia(this.identificador).subscribe(
+      data => {
+        console.log(data);
+        this.colonias = data.objects;
+      }
+    )
 
   
 
+}
 }
 

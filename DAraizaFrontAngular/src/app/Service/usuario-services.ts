@@ -6,6 +6,8 @@ import { Result } from '../Interface/ResultModel';
 import { Pais } from '../Interface/PaisModel';
 import { Rol } from '../Interface/RolModel';
 import { Estado } from '../Interface/EstadoModel';
+import { Municipio } from '../Interface/MunicipioModel';
+import { Colonia } from '../Interface/ColoniaModel';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +18,9 @@ export class UsuarioService{
   private urlPais : string = "http://localhost:8080/api/pais";
     private urlRol : string = "http://localhost:8080/api/rol";
     private urlEstado : string = "http://localhost:8080/api/estado?idPais=";
-
-
+  private urlMunicipio: string = "http://localhost:8080/api/municipio?idEstado="
+  private urlColonia: string = "http://localhost:8080/api/colonia?idMunicipio="
+  
   constructor (private http : HttpClient){ }
 
   getAll(): Observable<Result<UsuarioModel>>{
@@ -36,8 +39,10 @@ export class UsuarioService{
     return this.http.get<Result<Pais>>(this.urlPais)
   }
 
-  getEstado(): Observable<Result<Estado>>{
-    return this.http.get<Result<Estado>>(this.urlEstado)
+ 
+
+  getEstado(idPais: any): Observable<Result<Estado>>{
+    return this.http.get<Result<Estado>>(this.urlEstado+ idPais)
   }
 
 
@@ -45,6 +50,15 @@ export class UsuarioService{
     return this.http.delete<Result<UsuarioModel>>(this.url + "/delete" + usuario.IdUsuario);
 
   }
+
+  getMunicipios(idEstado: any): Observable<Result<Municipio>>{
+    return this.http.get<Result<Municipio>>(this.urlMunicipio+ idEstado)
+  }
+
+  getColonia(idMunicipio: any): Observable<Result<Colonia>>{
+    return this.http.get<Result<Colonia>>(this.urlColonia+ idMunicipio)
+  }
+
 
   
 }
