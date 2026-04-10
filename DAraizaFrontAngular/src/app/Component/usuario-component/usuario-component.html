@@ -1,3 +1,9 @@
+<style>
+    li {
+        list-style: none;
+    }
+</style>
+
 <body class="bg-dark text-white">
 
     <h1 class="text-center mb-4 mt-4">Información del usuario</h1>
@@ -7,13 +13,16 @@
         <thead>
             <tr>
                 <th>
-                    <p>Nombre del Usuario</p>
+                    <p>Información del Usuario</p>
                 </th>
                 <th>
                     <p>Informacion de contacto</p>
                 </th>
                 <th>
                     <p>Domicilio</p>
+                </th>
+                <th>
+                    <p>Acciones</p>
                 </th>
 
             </tr>
@@ -24,14 +33,17 @@
             <tr>
                 <td>
                     <li>
-                        <p>Nombre: {{usuario.Nombre + ' ' + usuario.ApellidoPaterno + ' ' + usuario.ApellidoMaterno}}
+                      <p><span><i class="bi bi-person-badge-fill"> </i></span> {{usuario.Nombre + ' ' + usuario.ApellidoPaterno + ' ' + usuario.ApellidoMaterno}} 
                         </p>
                     </li>
                     <li>
-                        <p>CURP: {{usuario.CURP}}</p>
+                        <p><span>CURP:</span> {{usuario.CURP}}</p>
                     </li>
                     <li>
-                        <p>Fecha de nacimiento: {{usuario.FechaNacimiento}}</p>
+                        <p><span><i class="bi bi-calendar-date"></i></span> {{usuario.FechaNacimiento}}</p>
+                    </li>
+                    <li>
+                        <p><span><i class="bi bi-person-standing"></i> </span> {{usuario.Sexo}}</p>
                     </li>
                     <li>
                         <img [src]="'data:image/png;base64,' + usuario.Imagen" style="width:  150px" />
@@ -39,27 +51,37 @@
                 </td>
                 <td>
                     <li>
-                        <p>Telefono: {{usuario.NumeroTelefonico}}</p>
+                        <p><span><i class="bi bi-telephone-fill"></i></span> {{usuario.NumeroTelefonico}}</p>
                     </li>
                     <li>
-                        <p>Username: {{usuario.Username}}</p>
+                        <p><span><i class="bi bi-person-fill"></i></span> {{usuario.Username}}</p>
                     </li>
                     <li>
-                        <p>Correo: {{usuario.Email}}</p>
+                        <p><span><i class="bi bi-envelope-at"></i></span> {{usuario.Email}}</p>
                     </li>
 
+                    @for (roles of usuario.Roles; track roles.idRol) {
+                    <li>
+                        <p><span><i class="bi bi-person-vcard"></i></span> {{roles.NombreRol}}</p>
+                    </li>
+                }
                 </td>
                 <td>
                     @for(direccion of usuario.Direcciones; track direccion.idDireccion){
                     <li>
-                        <p>{{direccion.idDireccion}}</p>
-                        <p>{{direccion.Calle}} {{direccion.NumeroInterior}} {{direccion.NumeroExterior}}</p>
-                        <p>
-                            <P></P>
+                      <p><i class="bi bi-geo-alt"></i><span> {{direccion.Calle}}, {{direccion.NumeroInterior}}, {{direccion.NumeroExterior}}, {{direccion.colonia.Nombre}}, CP: {{direccion.colonia.CodigoPostal}} </span></p>
+                        <p>{{direccion.colonia.municipio.Nombre}}, {{direccion.colonia.municipio.estado.Nombre}}, {{direccion.colonia.municipio.estado.pais.Nombre}}</p>
+                        <p></p>
+
                     </li>
 
                     }
 
+                </td>
+                <td>
+                    <a class="btn btn-success"><i class="bi bi-pencil-fill"></i></a> 
+                            <a class="btn btn-danger" href= "#" data-bs-target="#modalEliminar" data-bs-toggle="modal" th:onclick="|ChangeUrl(${usuario.idUsuario})|"><i class="bi bi-person-dash"></i></a>
+                            <a  class="btn btn-warning" ><i class="bi bi-info-circle"></i></a>
                 </td>
 
 

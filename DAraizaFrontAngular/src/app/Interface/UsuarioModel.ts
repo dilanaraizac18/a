@@ -15,7 +15,7 @@ export interface UsuarioModel{
     Sexo : string,
     Status : number,
     Username: string,
-    Rol: Rol,
+    Roles: Rol [],
     Direcciones: Direccion []
 }
 

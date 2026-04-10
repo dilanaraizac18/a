@@ -13,6 +13,7 @@ export class UsuarioComponent implements OnInit{
 
 public usuarios : UsuarioModel[] = [];
 
+
 constructor (private usuarioService: UsuarioService){};
 
 ngOnInit():void{
@@ -29,6 +30,14 @@ this.usuarioService.getAll().subscribe(
   }
 );
 }
+
+// Delete(){
+//   this.usuarioService.DeleteUsuario().subscribe(
+//     data =>{
+//       this.usuarios = data.object;
+//     }
+//   )
+// }
 
 
 }

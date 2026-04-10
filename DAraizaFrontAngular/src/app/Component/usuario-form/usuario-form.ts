@@ -1,7 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { UsuarioModel } from '../../Interface/UsuarioModel';
-import {ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { UsuarioService } from '../../Service/usuario-services';
+import { Pais } from '../../Interface/PaisModel';
+import { Rol } from '../../Interface/RolModel';
+import { Estado } from '../../Interface/EstadoModel';
 
 @Component({
   selector: 'app-usuario-form',
@@ -10,41 +13,88 @@ import { UsuarioService } from '../../Service/usuario-services';
   styleUrl: './usuario-form.css',
 })
 export class UsuarioForm {
-public usuario: UsuarioModel | undefined;
+  public usuario: UsuarioModel | undefined;
 
-private formularioReactivo = inject(FormBuilder);
+  public paises: Pais[] = [];
+  public roles: Rol[] = [];
+  public estados : Estado [] = [];
 
-constructor (private usuarioService: UsuarioService){}
 
-public form : FormGroup = this.formularioReactivo.group({
+  private formularioReactivo = inject(FormBuilder);
 
-  nombre : [''],
-  apellidoPaterno : [''],
-  apellidoMaterno : [''],
-  numeroTelefonico : [''],
-  fechaNacimiento: [''],
-  CURP : [''],
-  sexo: [''],
-  celular: [''],
-  email: [''],
-  password: ['']
-});
+  constructor(private usuarioService: UsuarioService) { }
 
-enviarDatos(){
+  public form: FormGroup = this.formularioReactivo.group({
 
-  this.usuario = this.form.value as UsuarioModel;
-  this.usuarioService.add(this.usuario).subscribe({
-    next:(data) =>{
-      if(data.Correct) {
+    nombre: [''],
+    apellidoPaterno: [''],
+    apellidoMaterno: [''],
+    numeroTelefonico: [''],
+    fechaNacimiento: [''],
+    CURP: [''],
+    sexo: [''],
+    username: [''],
+    celular: [''],
+    email: [''],
+    password: ['']
+  });
 
-        alert("Usuario insertado con exito");
+  enviarDatos() {
+
+    this.usuario = this.form.value as UsuarioModel;
+    this.usuarioService.add(this.usuario).subscribe({
+      next: (data) => {
+        if (data.Correct) {
+
+          alert("Usuario insertado con exito");
+        }
       }
     }
+    );
   }
-  );
+
+  ngOnInit(): void {
+    this.GetPais();
+    this.GetRol();
+    // this.GetEstado();
+  }
+
+  GetPais() {
+    this.usuarioService.getPais().subscribe(
+      data => {
+        this.paises = data.objects;
+        console.log(data)
+      }, error => {
+
+      }
+    )
+  }
+
+  GetRol(){
+    this.usuarioService.getRol().subscribe(
+      data =>{
+        this.roles = data.objects;
+        console.log(data)
+      },error =>{
+
+      }
+      
+
+    )
+  }
+
+  // GetEstado(){
+  //   this.usuarioService.getEstado().subscribe(
+  //     data =>{
+  //       this.estados = data.objects;
+  //       console.log(data);
+  //     }, error =>{
+
+  //     }
+  //   )
+  // }
+
+  
+
 }
 
-
-
-
-}
