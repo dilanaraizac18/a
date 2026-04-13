@@ -24,7 +24,7 @@ export class UsuarioForm {
   public municipios: Municipio[] = [];
   public colonias: Colonia[] = [];
   public identificador: number | undefined;
-
+  public imagenSeleccionada: File | null = null;
 
 
   private formularioReactivo = inject(FormBuilder);
@@ -56,6 +56,8 @@ export class UsuarioForm {
 
   crearDireccion(): FormGroup {
     return this.formularioReactivo.group({
+      
+        idDireccion: [0],
       Calle: [''],
       NumeroInterior: [''],
       NumeroExterior: [''],
@@ -84,11 +86,16 @@ enviarDatosform(){
 }
 
 
-
+ imagenCargada(event: any) {
+    if (event.target.files.length > 0) {
+      this.imagenSeleccionada = event.target.files[0];
+    }
+  }
   enviarDatos() {
 
     this.usuario = this.form.value as UsuarioModel;
-    this.usuarioService.add(this.usuario).subscribe({
+    this.usuario.Status = 1;
+    this.usuarioService.add(this.usuario,this.imagenSeleccionada).subscribe({
       next: (data) => {
         if (data.Correct) {
 

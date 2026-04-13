@@ -27,9 +27,16 @@ export class UsuarioService{
     return this.http.get<Result<UsuarioModel>>(this.url);
   } 
 
-  add(usuario : UsuarioModel): Observable<Result<UsuarioModel>> {
-    return this.http.post<Result<UsuarioModel>>(this.url, usuario)
+  add(usuario : UsuarioModel, imagen: File | null): Observable<Result<UsuarioModel>> {
+  const formData = new FormData();
+    const datosBlob = new Blob([JSON.stringify(usuario)], { type: 'application/json' });
+    formData.append('datos', datosBlob);
+
+    if (imagen) {
+    formData.append('imagen', imagen);
   }
+    return this.http.post<Result<UsuarioModel>>(this.url + "/add", formData);
+    }
 
   getRol(): Observable<Result<Rol>>{
     return this.http.get<Result<Rol>>(this.urlRol)
@@ -59,6 +66,13 @@ export class UsuarioService{
     return this.http.get<Result<Colonia>>(this.urlColonia+ idMunicipio)
   }
 
+  udpateEstatus(idUsuario: number, estatus: number): Observable<Result<UsuarioModel>>{
+    return this.http.patch<Result<UsuarioModel>>(this.url+"/Status?idUsuario=" + idUsuario + "&status=" + estatus, null);
+  }
+
+  getById(idUsuario: number): Observable<Result<UsuarioModel>>{
+    return this.http.get<Result<UsuarioModel>>(this.url+ "/"+ idUsuario)
+  }
 
 
   

@@ -34,9 +34,16 @@ export class UsuarioComponent implements OnInit {
     );
   }
 
-  cambioStatus(event :Event){
-    const switchStatus = event.target as HTMLSelectElement;
-    
+  cambioStatus(event: Event, idUsuario: number, status: number) {
+    const swEstatus = event.target as HTMLInputElement;
+    status = swEstatus.checked ? 1 : 0;
+    //idUsuario = this.idUsuario || 0;
+    this.usuarioService.udpateEstatus(idUsuario, status).subscribe(
+      data => {
+        console.log(data);
+      }, error => {
+      }
+    )
   }
 
 

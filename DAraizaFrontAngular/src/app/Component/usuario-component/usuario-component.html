@@ -8,7 +8,7 @@
 
     <div class="d-flex">
         <div class="ms-auto">
-                <a [routerLink]="['/form']" class="btn btn-success"><i class="bi bi-person-add"></i> Agregar usuario</a>
+            <a [routerLink]="['/form']" class="btn btn-success"><i class="bi bi-person-add"></i> Agregar usuario</a>
 
         </div>
 
@@ -45,7 +45,8 @@
             <tr>
                 <td>
                     <li>
-                      <p><span><i class="bi bi-person-badge-fill"> </i></span> {{usuario.Nombre + ' ' + usuario.ApellidoPaterno + ' ' + usuario.ApellidoMaterno}} 
+                        <p><span><i class="bi bi-person-badge-fill"> </i></span> {{usuario.Nombre + ' ' +
+                            usuario.ApellidoPaterno + ' ' + usuario.ApellidoMaterno}}
                         </p>
                     </li>
                     <li>
@@ -76,47 +77,53 @@
                     <li>
                         <p><span><i class="bi bi-person-vcard"></i></span> {{roles.NombreRol}}</p>
                     </li>
-                }
+                    }
                 </td>
                 <td>
                     @for(direccion of usuario.Direcciones; track direccion.idDireccion){
                     <li>
-                      <p><i class="bi bi-geo-alt"></i><span> {{direccion.Calle}}, {{direccion.NumeroInterior}}, {{direccion.NumeroExterior}}, {{direccion.colonia.Nombre}}, CP: {{direccion.colonia.CodigoPostal}} </span></p>
-                        <p>{{direccion.colonia.municipio.Nombre}}, {{direccion.colonia.municipio.estado.Nombre}}, {{direccion.colonia.municipio.estado.pais.Nombre}}</p>
+                        <p><i class="bi bi-geo-alt"></i><span> {{direccion.Calle}}, {{direccion.NumeroInterior}},
+                                {{direccion.NumeroExterior}}, {{direccion.colonia.Nombre}}, CP:
+                                {{direccion.colonia.CodigoPostal}} </span></p>
+                        <p>{{direccion.colonia.municipio.Nombre}}, {{direccion.colonia.municipio.estado.Nombre}},
+                            {{direccion.colonia.municipio.estado.pais.Nombre}}</p>
                         <p></p>
 
                     </li>
 
                     }
 
+                    @empty {
+                    <div>
+                        <p class="text-danger">(Sin direcciones)</p>
+                    </div>
+                    }
+
                 </td>
                 <td>
-                    <a class="btn btn-success"><i class="bi bi-pencil-fill"></i></a> 
-                            <a class="btn btn-danger"  data-bs-target="#modalEliminar" data-bs-toggle="modal" (click)="Delete(usuario.IdUsuario)"><i class="bi bi-person-dash"></i></a>
-                            <a  class="btn btn-warning" ><i class="bi bi-info-circle"></i></a>
+                    <a class="btn btn-success"><i class="bi bi-pencil-fill"></i></a>
+                    <a class="btn btn-danger" data-bs-target="#modalEliminar" data-bs-toggle="modal"
+                        (click)="Delete(usuario.IdUsuario)"><i class="bi bi-person-dash"></i></a>
+                    <a class="btn btn-warning" [routerLink]="['/details/'+ usuario.IdUsuario]"><i
+                            class="bi bi-info-circle"></i></a>
                 </td>
 
                 <td>
                     @if (usuario.Status == 1) {
-                     <div class="form-check form-switch" >
-                            <input class="form-check-input switch-estatus" 
-                                   type="checkbox" 
-                                   role="switch" 
-                                   checked
-                                   >
+                    <div class="form-check form-switch"
+                        (change)="cambioStatus($event, usuario.IdUsuario, usuario.Status)">
+
+                        <input class="form-check-input switch-estatus" type="checkbox" role="switch" checked>
 
 
-                        </div>
+                    </div>
                     }@else {
-                        <div class="form-check form-switch" >
-                            <input class="form-check-input switch-estatus" 
-                                   type="checkbox" 
-                                   role="switch"  
-                                   
-                                   >
+                    <div class="form-check form-switch"
+                        (change)="cambioStatus($event, usuario.IdUsuario, usuario.Status)">
+                        <input class="form-check-input switch-estatus" type="checkbox" role="switch">
 
 
-                        </div>
+                    </div>
                     }
                 </td>
 
