@@ -56,13 +56,13 @@
                         <p><span><i class="bi bi-calendar-date"></i></span> {{usuario.FechaNacimiento}}</p>
                     </li>
 
-                    @if (usuario.Sexo == 'MA' || usuario.Sexo == 'Ma') {
+                    @if (usuario.Sexo.toUpperCase() == 'MA') {
                          <li>
-                        <p><span><i class="bi bi-person-standing"></i> </span> {{usuario.Sexo}}</p>
+                        <p><span class="sexoSpanMan"><i class="bi bi-person-standing"></i> </span> {{usuario.Sexo}}</p>
                     </li>
                     } @else {
                         <li>
-                        <p><span><i class="bi bi-person-standing-dress"></i> </span> {{usuario.Sexo}}</p>
+                        <p><span class="sexoSpanWoman"><i class="bi bi-person-standing-dress"></i> </span> {{usuario.Sexo}}</p>
                     </li>
                     }
                    

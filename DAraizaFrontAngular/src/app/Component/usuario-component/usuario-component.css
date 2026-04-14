@@ -14,3 +14,11 @@ checkbox {
   background-color: red; /* Tu color deseado */
   border-color: red;
 }
+
+.sexoSpanMan{
+  color: blue;
+}
+
+.sexoSpanWoman{
+  color: rgb(210, 42, 202);
+}

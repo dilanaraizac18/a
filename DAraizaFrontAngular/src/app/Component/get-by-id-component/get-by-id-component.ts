@@ -188,15 +188,22 @@ crearDirecciones(): FormGroup{
 
 
 
+  
   imagenCargada(event: any) {
-    if (event.target.files.length > 0) {
-      this.imagenSeleccionada = event.target.files[0];
-    }
+  const file = event.target.files[0];
+  if (file) {
+    this.imagenSeleccionada = file;
+    console.log("Imagen cargada:", file);
   }
+}
 
-  updateImagen(idusuario : any, imagenSeleccionada : File) {
+  updateImagen(idusuario : any) {
 
-    this.usuarioService.updateImagen(idusuario,imagenSeleccionada).subscribe({
+    
+  const formData = new FormData();
+  formData.append("imagen", this.imagenSeleccionada as File);
+
+    this.usuarioService.updateImagen(idusuario,formData).subscribe({
       next: (data) => {
         if (data.Correct) {
 

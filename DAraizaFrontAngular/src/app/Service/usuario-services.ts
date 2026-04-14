@@ -84,10 +84,8 @@ export class UsuarioService{
 //   return this.http.post<Result<Direccion>>(this.url + "Direccion?identificador=" + idUsuario, FormData)
 // }
 
-updateImagen(idUsuario: any, imagen : File): Observable <Result<UsuarioModel>>{
-  const formdata = new FormData;
-      formdata.append('imagen', imagen);
-  return this.http.post<Result<UsuarioModel>>(this.url + "/imagen/" + idUsuario, formdata)
+updateImagen(idUsuario: any, imagen : FormData): Observable <Result<UsuarioModel>>{
+  return this.http.post<Result<UsuarioModel>>(this.url + "/imagen/" + idUsuario, imagen)
 }
   
 }
