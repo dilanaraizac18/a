@@ -8,6 +8,8 @@ import { Rol } from '../Interface/RolModel';
 import { Estado } from '../Interface/EstadoModel';
 import { Municipio } from '../Interface/MunicipioModel';
 import { Colonia } from '../Interface/ColoniaModel';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
+import { Direccion } from '../Interface/DireccionModel';
 
 @Injectable({
   providedIn: 'root',
@@ -67,13 +69,25 @@ export class UsuarioService{
   }
 
   udpateEstatus(idUsuario: number, estatus: number): Observable<Result<UsuarioModel>>{
-    return this.http.patch<Result<UsuarioModel>>(this.url+"/Status?idUsuario=" + idUsuario + "&status=" + estatus, null);
+    return this.http.patch<Result<UsuarioModel>>(this.url+"/status?idUsuario=" + idUsuario + "&status=" + estatus, null);
   }
 
   getById(idUsuario: number): Observable<Result<UsuarioModel>>{
     return this.http.get<Result<UsuarioModel>>(this.url+ "/"+ idUsuario)
   }
 
+  deleteDireccion(idDireccion: number): Observable <Result<Direccion>>{
+    return this.http.delete<Result<Direccion>>(this.url + "/Delete/Direccion/" + idDireccion);
+  }
 
+// addDirecciones(idUsuario: number): Observable <Result<Direccion>>{
+//   return this.http.post<Result<Direccion>>(this.url + "Direccion?identificador=" + idUsuario, FormData)
+// }
+
+updateImagen(idUsuario: any, imagen : File): Observable <Result<UsuarioModel>>{
+  const formdata = new FormData;
+      formdata.append('imagen', imagen);
+  return this.http.post<Result<UsuarioModel>>(this.url + "/imagen/" + idUsuario, formdata)
+}
   
 }

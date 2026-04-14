@@ -55,9 +55,17 @@
                     <li>
                         <p><span><i class="bi bi-calendar-date"></i></span> {{usuario.FechaNacimiento}}</p>
                     </li>
-                    <li>
+
+                    @if (usuario.Sexo == 'MA' || usuario.Sexo == 'Ma') {
+                         <li>
                         <p><span><i class="bi bi-person-standing"></i> </span> {{usuario.Sexo}}</p>
                     </li>
+                    } @else {
+                        <li>
+                        <p><span><i class="bi bi-person-standing-dress"></i> </span> {{usuario.Sexo}}</p>
+                    </li>
+                    }
+                   
                     <li>
                         <img [src]="'data:image/png;base64,' + usuario.Imagen" style="width:  150px" />
                     </li>
@@ -101,10 +109,10 @@
 
                 </td>
                 <td>
-                    <a class="btn btn-success"><i class="bi bi-pencil-fill"></i></a>
-                    <a class="btn btn-danger" data-bs-target="#modalEliminar" data-bs-toggle="modal"
+                    <a class="btn btn-success m-2"><i class="bi bi-pencil-fill"></i></a>
+                    <a class="btn btn-danger m-2" data-bs-target="#modalEliminar" data-bs-toggle="modal"
                         (click)="Delete(usuario.IdUsuario)"><i class="bi bi-person-dash"></i></a>
-                    <a class="btn btn-warning" [routerLink]="['/details/'+ usuario.IdUsuario]"><i
+                    <a class="btn btn-warning m-2" [routerLink]="['/details/'+ usuario.IdUsuario]"><i
                             class="bi bi-info-circle"></i></a>
                 </td>
 
