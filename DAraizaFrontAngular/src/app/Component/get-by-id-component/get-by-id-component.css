@@ -1,3 +1,74 @@
 span{
     color: rgb(5, 142, 5);
 }
+
+
+ @Override
+public List<Usuario> Filter(String filter) {
+
+    List<Usuario> lista = GetALL();
+
+    if (filter == null || filter.isEmpty()) {
+        throw new RuntimeException("El filtro no puede ser vacío");
+    }
+
+    String[] partes = filter.split("\\+");
+
+    if (partes.length != 3) {
+        throw new RuntimeException("Formato inválido. Usa: campo+operador+valor");
+    }
+
+    String campo = partes[0].toLowerCase();
+    String operador = partes[1].toLowerCase();
+    String valor = partes[2].toLowerCase();
+
+    return lista.stream().filter(u -> {
+
+        String campoValor = "";
+
+        switch (campo) {
+            case "email":
+                campoValor = u.getEmail();
+                break;
+            case "id":
+                campoValor = u.getIdUsuario();
+                break;
+            case "name":
+                campoValor = u.getUsername();
+                break;
+            case "phone":
+                campoValor = u.getTelefono();
+                break;
+            case "tax_id":
+                campoValor = u.getTaxId();
+                break;
+            case "created_at":
+                campoValor = u.getFecha().toString();
+                break;
+            default:
+                return false;
+        }
+
+        if (campoValor == null) return false;
+
+        campoValor = campoValor.toLowerCase();
+
+        switch (operador) {
+            case "co": // contains
+                return campoValor.contains(valor);
+
+            case "sw": // starts with
+                return campoValor.startsWith(valor);
+
+            case "ew": // ends with
+                return campoValor.endsWith(valor);
+
+            case "eq": // equals
+                return campoValor.equals(valor);
+
+            default:
+                throw new RuntimeException("Operador no válido");
+        }
+
+    }).collect(toList());
+}
