@@ -399,5 +399,129 @@ public class UsuarioComponent {
 }
     
     
-    
+   component
+  
+  
+  
+  import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { PokemonModel } from '../Interfaces/pokemon-model';
+import { Service } from '../Service/service';
 
+@Component({
+  selector: 'app-pokemon-main-component',
+  imports: [],
+  templateUrl: './pokemon-main-component.html',
+  styleUrl: './pokemon-main-component.css',
+})
+export class PokemonMainComponent implements OnInit{
+        public pokemones : PokemonModel [] = []; 
+
+        constructor (private service : Service){}
+
+        ngOnInit(): void {
+          this.getAll();
+        }
+
+        getAll(){
+          this.service.getAll().subscribe(
+            data => {
+              this.pokemones  = data;
+              console.log(data);
+              }, error => {
+                console.error('Error:', error);
+              }
+          );
+        }
+      }
+
+import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { PokemonModel } from '../Interfaces/pokemon-model';
+import { Service } from '../Service/service';
+
+@Component({
+  selector: 'app-pokemon-main-component',
+  imports: [],
+  templateUrl: './pokemon-main-component.html',
+  styleUrl: './pokemon-main-component.css',
+})
+export class PokemonMainComponent implements OnInit{
+        public pokemones : PokemonModel [] = []; 
+
+        constructor (private service : Service){}
+
+        ngOnInit(): void {
+          this.getAll();
+        }
+
+        getAll(){
+          this.service.getAll().subscribe(
+            data => {
+              this.pokemones  = data;
+              console.log(data);
+              }, error => {
+                console.error('Error:', error);
+              }
+          );
+        }
+      }
+
+
+      service
+
+      import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http'
+import {  map, Observable } from 'rxjs';
+
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
+import { PokemonModel, PokemonResponse } from '../Interfaces/pokemon-model';
+import { ResultModel } from '../Interfaces/result-model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class Service {
+
+  private url: string = "https://pokeapi.co/api/v2/pokemon";
+  private urlId: string = "https://pokeapi.co/api/v2/pokemon/";
+
+  constructor (private http: HttpClient){}
+
+
+
+getByiD(nombre: string){
+  return this.http.get<PokemonResponse>(this.urlId + nombre);
+} 
+   
+
+
+getAll() {
+  return this.http.get<PokemonResponse>(this.url).pipe(
+    map(response => {
+      return response.results.map(p => {
+        const id = Number(p.url.split('/').filter(Boolean).pop());
+
+        return {
+          name: p.name,
+          url: p.url,
+          idPokemon: id,
+          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+        };
+      });
+    })
+  );
+}
+}
+
+interfadce
+
+export interface PokemonModel {
+    idPokemon: number,
+    name: string,
+    url: string,
+    image: string
+}
+
+export interface PokemonResponse {
+  results: PokemonModel[];
